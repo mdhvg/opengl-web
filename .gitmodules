@@ -1,0 +1,9 @@
+[submodule "src-cpp/deps/fmt"]
+	path = src-cpp/deps/fmt
+	url = https://github.com/fmtlib/fmt
+[submodule "src-cpp/deps/imgui"]
+	path = src-cpp/deps/imgui
+	url = https://github.com/ocornut/imgui
+[submodule "src-cpp/deps/glfw"]
+	path = src-cpp/deps/glfw
+	url = https://github.com/glfw/glfw

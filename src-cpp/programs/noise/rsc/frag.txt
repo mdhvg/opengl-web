@@ -1,0 +1,22 @@
+#version 300 es
+precision highp float;
+out vec4 FragColor;
+in vec2 uvOut;
+// uniform sampler2D tex;
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+
+float random(vec2 uv)
+{
+    return fract(sin(dot(uv, vec2(12.9898,78.233)))*43758.5453123);
+}
+
+void main()
+{
+    if (length(mouse/resolution - uvOut) < 0.2) {
+        FragColor = vec4(uvOut, 0.0f, 1.0f);
+    } else {
+        FragColor = vec4(uvOut, 1.0f, 1.0f);
+    }
+}
