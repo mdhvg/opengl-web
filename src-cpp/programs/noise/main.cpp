@@ -81,23 +81,7 @@ static EM_BOOL loop(double time, void* data) {
 	return EM_TRUE;
 }
 
-static EM_BOOL EmscriptenMouseCallback(int eventType, const EmscriptenMouseEvent* mouseEvent, void* userData)
-{
-	ImGuiIO& io = ImGui::GetIO();
-	io.AddMouseButtonEvent(mouseEvent->button, true);
-	return 1;
-}
-
-static EM_BOOL EmscriptenMouseMoveCallback(int eventType, const EmscriptenMouseEvent* mouseEvent, void* userData)
-{
-	ImGuiIO& io = ImGui::GetIO();
-	glUniform2f(glGetUniformLocation(((UserData*)userData)->renderProgram, "mouse"), (float)mouseEvent->clientX, (float)(950 - mouseEvent->clientY));
-	io.AddMousePosEvent(mouseEvent->clientX, mouseEvent->clientY);
-
-	return 1; // The event was consumed by the callback handler
-}
-
-extern "C" int main(int argc, char** argv) {
+extern "C" int EMSCRIPTEN_KEEPALIVE init(int argc, char** argv) {
 	if (!glfwInit()) {
 		return 0;
 	}
@@ -157,8 +141,6 @@ extern "C" int main(int argc, char** argv) {
 	UserData* userData = new UserData{ window, indices, renderProgram, texture, 0, renderBuffers };
 
 	/* Render Loop */
-	emscripten_set_click_callback("#canvas", NULL, 1, EmscriptenMouseCallback);
-	emscripten_set_mousemove_callback("#canvas", userData, 1, EmscriptenMouseMoveCallback);
 	emscripten_request_animation_frame_loop(loop, userData);
 
 	return 0;

@@ -13,14 +13,14 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
     message(STATUS "Targeting WebAssembly (Emscripten)")
 
     # Set output file format
-    set(CMAKE_EXECUTABLE_SUFFIX ".js")
+    set(CMAKE_EXECUTABLE_SUFFIX ".mjs")
 
     # print executable name
     message(STATUS "Executable name: ${CMAKE_PROJECT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
 
     # WebAssembly-Specific Flags
     set(EMSCRIPTEN_COMPILE_FLAGS
-        "-s USE_WEBGL2=1 -s FULL_ES3=1 -lembind -s USE_GLFW=3 --emit-tsd noise.d.ts -s EXPORT_NAME=Wasm -s ALLOW_MEMORY_GROWTH=1  -s SINGLE_FILE=1 -s NO_DISABLE_EXCEPTION_CATCHING -s EXPORT_ES6=1 -s NO_EXIT_RUNTIME=1 -s \"EXPORTED_RUNTIME_METHODS=['stringToNewUTF8', 'UTF8ToString']\" -s EXPORT_ALL=1 -s \"EXPORTED_FUNCTIONS=['_free', '_malloc', '_main']\""
+        "-s USE_WEBGL2=1 -s FULL_ES3=1 -lembind -s MODULARIZE -s EXPORT_ES6 -s --no-entry -s USE_GLFW=3 --emit-tsd noise.d.ts -s WASM=2 -s ALLOW_MEMORY_GROWTH=1 -s NO_DISABLE_EXCEPTION_CATCHING -s EXPORT_ES6=1 -s NO_EXIT_RUNTIME=1 -s \"EXPORTED_RUNTIME_METHODS=['stringToNewUTF8', 'UTF8ToString']\" -s EXPORT_ALL=1 -s \"EXPORTED_FUNCTIONS=['_free', '_malloc']\""
     )
 
     # Modify compiler flags
