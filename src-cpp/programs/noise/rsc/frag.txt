@@ -15,7 +15,7 @@ float random(vec2 uv)
 void main()
 {
     if (length(mouse/resolution - uvOut) < 0.2) {
-        FragColor = vec4(uvOut, 0.0f, 1.0f);
+        FragColor = vec4(random(uvOut * time));
     } else {
         FragColor = vec4(uvOut, 1.0f, 1.0f);
     }

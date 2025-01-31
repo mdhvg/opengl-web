@@ -34,6 +34,8 @@ struct UserData {
 	unsigned int texture;
 	float startTime = 0;
 	RenderBuffer renderBuffers;
+	// function that returns int
+	int (*height)();
 };
 
 static EM_BOOL loop(double time, void* data) {
@@ -68,6 +70,12 @@ static EM_BOOL loop(double time, void* data) {
 		ImGui::InputText("Text", text, 10);
 		userData->startTime = time;
 		ImGui::End();
+	}
+
+	if (!ImGui::GetIO().WantCaptureMouse) {
+		double xpos, ypos;
+		glfwGetCursorPos(userData->window, &xpos, &ypos);
+		glUniform2f(glGetUniformLocation(userData->renderProgram, "mouse"), xpos, userData->height() - ypos);
 	}
 
 	ImGui::Render();
@@ -138,7 +146,7 @@ extern "C" int EMSCRIPTEN_KEEPALIVE init(int argc, char** argv) {
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init(glsl_version);
 
-	UserData* userData = new UserData{ window, indices, renderProgram, texture, 0, renderBuffers };
+	UserData* userData = new UserData{ window, indices, renderProgram, texture, 0, renderBuffers, canvasHeight };
 
 	/* Render Loop */
 	emscripten_request_animation_frame_loop(loop, userData);

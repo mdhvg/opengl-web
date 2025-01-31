@@ -1,8 +1,10 @@
 import "./App.css";
 import fragShader from "../src-cpp/programs/noise/rsc/frag.txt?raw";
 import vertShader from "../src-cpp/programs/noise/rsc/vert.txt?raw";
-import Wasm from "./noise.mjs";
 import { useEffect, useRef } from "react";
+import { MainModule } from "./noise";
+// @ts-ignore
+import Wasm from "./noise.mjs";
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -12,7 +14,7 @@ function App() {
       canvas: canvasRef.current,
     };
     let wasm;
-    Wasm(Module).then((w) => {
+    Wasm(Module).then((w: MainModule) => {
       wasm = w;
       console.log(wasm);
       const vertPtr = wasm.stringToNewUTF8(vertShader);
