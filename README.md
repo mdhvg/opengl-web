@@ -32,7 +32,7 @@ cd src-cpp
 mkdir build
 ```
 
-# Linux/MacOS (Mac not tested)
+### Linux/MacOS (Mac not tested)
 
 - Build the C++ code
 
